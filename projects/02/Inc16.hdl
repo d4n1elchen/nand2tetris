@@ -5,7 +5,7 @@
 
 /**
  * 16-bit incrementer:
- * out = in + 1 (arithmetic addition)
+ * out = in + 1 (arithmetic addition) = Add(x, Not(Add(1, 1))) = Not(Add(Not(x), -1))
  */
 
 CHIP Inc16 {
@@ -13,5 +13,7 @@ CHIP Inc16 {
     OUT out[16];
 
     PARTS:
-   // Put you code here:
+    Not16(in=in, out=nin);
+    Add16(a=nin, b=true, out=x);
+    Not16(in=x, out=out);
 }
