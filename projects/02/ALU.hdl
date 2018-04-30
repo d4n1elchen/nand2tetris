@@ -50,9 +50,11 @@ CHIP ALU {
     Add16(a=x1, b=y1, out=fadd);
     Not16(in=fand, out=nfand);
     Not16(in=fadd, out=nfadd);
-    Mux4Way16(a=fand, b=nfand, c=fadd, d=nfadd, sel[0]=no, sel[1]=f, out=out);
+    Mux4Way16(a=fand, b=nfand, c=fadd, d=nfadd, sel[0]=no, sel[1]=f, out[0..7]=lso, out[8..15]=mso, out=out, out[15]=ng);
 
-    /* Ignore status outputs */
-    Not(in=true, out=zr);
-    Not(in=true, out=ng);
+    /* Check zero */
+    Or8Way(in=lso, out=olso);
+    Or8Way(in=mso, out=omso);
+    Or(a=olso, b=omso, out=nzr);
+    Not(in=nzr, out=zr);
 }
