@@ -10,6 +10,9 @@
 // sum = 0
 // i = 0
 //
+// if R0 or R1 is 0:
+//   goto END
+//
 // if R0 > R1:
 //   a = R0
 //   n = R1
@@ -21,6 +24,7 @@
 //   sum += a
 //   i++
 //
+// (END)
 // R2 = sum
 
 // Compare two number
@@ -28,6 +32,16 @@
     M=0   // sum = 0
     @i
     M=0   // i = 0
+
+    @R0
+    D=M
+    @LOOP_END
+    D;JEQ // if R0 == 0, goto END
+
+    @R1
+    D=M
+    @LOOP_END
+    D;JEQ // if R1 == 0, goto END
 
     @R0
     D=M
