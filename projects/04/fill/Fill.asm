@@ -11,4 +11,56 @@
 // "white" in every pixel;
 // the screen should remain fully clear as long as no key is pressed.
 
-// Put your code here.
+// Psuedo code:
+// while True:
+//
+//   if RAM[KBD] is 0:
+//     fill = 0
+//   else:
+//     fill = -1
+//
+//   for(addr=SCREEN; addr<KBD; addr+=16):
+//     RAM[addr] = fill
+
+(MAIN_LOOP)
+    @KBD
+    D=M
+    @SET_CLEAR
+    D;JEQ
+
+    @fill
+    M=-1
+    @UPDATE_SCREEN
+    0;JMP
+
+(SET_CLEAR)
+    @fill
+    M=0
+
+(UPDATE_SCREEN)
+    @SCREEN
+    D=A
+    @addr
+    M=D
+
+(UPDATE_LOOP)
+    @addr
+    D=M
+    @KBD
+    D=D-A
+    @UPDATE_END
+    D;JEQ
+
+    @fill
+    D=M
+    @addr
+    A=M
+    M=D
+    @addr
+    M=M+1
+    @UPDATE_LOOP
+    0;JMP
+
+(UPDATE_END)
+    @MAIN_LOOP
+    0;JMP
