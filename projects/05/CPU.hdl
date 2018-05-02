@@ -39,5 +39,50 @@ CHIP CPU {
         pc[15];          // address of next instruction
 
     PARTS:
-    // Put your code here:
+    // Select A register input
+    Mux16(a=instruction, b=aluout, sel=instruction[15], out=rain);
+    Not(in=instruction[15], out=nitype);
+    Or(a=nitype, b=instruction[5], out=lra);
+    Register(in=rain, load=lra, out=ra, out[0..14]=addressM);
+
+    // Select D register input
+    Mux(a=false, b=instruction[4], sel=instruction[15], out=ld);
+    Register(in=aluout, load=ld, out=rd);
+
+    //// Select A/M and feed (D, A/M) into ALU for calculation
+    Mux16(a=ra, b=inM, sel=instruction[12], out=am);
+    ALU(x=rd, y=am, 
+        zx=instruction[11], nx=instruction[10], 
+        zy=instruction[9], ny=instruction[8], 
+        f=instruction[7], no=instruction[6], 
+        out=outM, out=aluout, 
+        zr=zr, ng=ng);
+
+    //// Determine the way of changing PC
+    // Check D is <0 =0 or >0
+    DMux4Way(in=true, sel[1]=zr, sel[0]=ng, a=gt, b=lt, c=eq);
+
+    // Figure out if it fits the given condition
+    And(a=lt, b=instruction[2], out=islt);
+    And(a=eq, b=instruction[1], out=iseq);
+    And(a=gt, b=instruction[0], out=isgt);
+    Xor(a=isgt, b=islt, out=isglt);
+    Or(a=isglt, b=iseq, out=cond);
+
+    // If all jump pin are 1, set lpc=1, else lpc=cond
+    And(a=instruction[0], b=instruction[1], out=aj12);
+    And(a=aj12, b=instruction[2], out=jmp);
+    Mux(a=cond, b=true, sel=jmp, out=tlpc1);
+
+    // Load only when C instruction comes in
+    Mux(a=false, b=tlpc, sel=instruction[15], out=lpc);
+
+    // inc=not(load)
+    Not(in=lpc, out=nlpc);
+
+    // Update PC
+    PC(in=ra, load=lpc, inc=nlpc, reset=reset, out[0..14]=pc);
+
+    //// Write destM directly to writeM when C instruction
+    And(a=instruction[15], b=instruction[3], out=writeM);
 }
