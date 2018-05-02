@@ -43,11 +43,11 @@ CHIP CPU {
     Mux16(a=instruction, b=aluout, sel=instruction[15], out=rain);
     Not(in=instruction[15], out=nitype);
     Or(a=nitype, b=instruction[5], out=lra);
-    Register(in=rain, load=lra, out=ra, out[0..14]=addressM);
+    ARegister(in=rain, load=lra, out=ra, out[0..14]=addressM);
 
     // Select D register input
     Mux(a=false, b=instruction[4], sel=instruction[15], out=ld);
-    Register(in=aluout, load=ld, out=rd);
+    DRegister(in=aluout, load=ld, out=rd);
 
     //// Select A/M and feed (D, A/M) into ALU for calculation
     Mux16(a=ra, b=inM, sel=instruction[12], out=am);
@@ -72,7 +72,7 @@ CHIP CPU {
     // If all jump pin are 1, set lpc=1, else lpc=cond
     And(a=instruction[0], b=instruction[1], out=aj12);
     And(a=aj12, b=instruction[2], out=jmp);
-    Mux(a=cond, b=true, sel=jmp, out=tlpc1);
+    Mux(a=cond, b=true, sel=jmp, out=tlpc);
 
     // Load only when C instruction comes in
     Mux(a=false, b=tlpc, sel=instruction[15], out=lpc);
