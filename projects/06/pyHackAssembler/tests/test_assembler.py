@@ -13,9 +13,9 @@ class AssemblerTestCase(unittest.TestCase):
             os.mkdir(self.tmp_dir)
 
     def test_assemble_Add_asm(self):
-        infile = os.path.join(self.current_dir, "..", "add", "Add.asm")
+        infile = os.path.join(self.current_dir, "test_asm", "add", "Add.asm")
         outfile = os.path.join(self.tmp_dir, "Add.hack")
-        cmpfile = os.path.join(self.current_dir, "..", "add", "Add.hack")
+        cmpfile = os.path.join(self.current_dir, "test_asm", "add", "Add.hack")
         asmer = assembler.HackAssembler(infile, outfile)
         asmer.assemble()
         self.assertFileEqual(outfile, cmpfile, "Assemble Add.asm failed")
@@ -23,9 +23,9 @@ class AssemblerTestCase(unittest.TestCase):
         os.remove(outfile)
 
     def test_assemble_Max_asm(self):
-        infile = os.path.join(self.current_dir, "..", "max", "Max.asm")
+        infile = os.path.join(self.current_dir, "test_asm", "max", "Max.asm")
         outfile = os.path.join(self.tmp_dir, "Max.hack")
-        cmpfile = os.path.join(self.current_dir, "..", "max", "Max.hack")
+        cmpfile = os.path.join(self.current_dir, "test_asm", "max", "Max.hack")
         asmer = assembler.HackAssembler(infile, outfile)
         asmer.assemble()
         self.assertFileEqual(outfile, cmpfile, "Assemble Max.asm failed")
@@ -33,9 +33,9 @@ class AssemblerTestCase(unittest.TestCase):
         os.remove(outfile)
 
     def test_assemble_MaxL_asm(self):
-        infile = os.path.join(self.current_dir, "..", "max", "MaxL.asm")
+        infile = os.path.join(self.current_dir, "test_asm", "max", "MaxL.asm")
         outfile = os.path.join(self.tmp_dir, "MaxL.hack")
-        cmpfile = os.path.join(self.current_dir, "..", "max", "MaxL.hack")
+        cmpfile = os.path.join(self.current_dir, "test_asm", "max", "MaxL.hack")
         asmer = assembler.HackAssembler(infile, outfile)
         asmer.assemble()
         self.assertFileEqual(outfile, cmpfile, "Assemble MaxL.asm failed")
@@ -43,18 +43,18 @@ class AssemblerTestCase(unittest.TestCase):
         os.remove(outfile)
 
     def test_assemble_Rect_asm(self):
-        infile = os.path.join(self.current_dir, "..", "rect", "Rect.asm")
+        infile = os.path.join(self.current_dir, "test_asm", "rect", "Rect.asm")
         outfile = os.path.join(self.tmp_dir, "Rect.hack")
-        cmpfile = os.path.join(self.current_dir, "..", "rect", "Rect.hack")
+        cmpfile = os.path.join(self.current_dir, "test_asm", "rect", "Rect.hack")
         asmer = assembler.HackAssembler(infile, outfile)
         asmer.assemble()
         self.assertFileEqual(outfile, cmpfile, "Assemble Rect.asm failed")
 
         os.remove(outfile)
     def test_assemble_RectL_asm(self):
-        infile = os.path.join(self.current_dir, "..", "rect", "RectL.asm")
+        infile = os.path.join(self.current_dir, "test_asm", "rect", "RectL.asm")
         outfile = os.path.join(self.tmp_dir, "RectL.hack")
-        cmpfile = os.path.join(self.current_dir, "..", "rect", "RectL.hack")
+        cmpfile = os.path.join(self.current_dir, "test_asm", "rect", "RectL.hack")
         asmer = assembler.HackAssembler(infile, outfile)
         asmer.assemble()
         self.assertFileEqual(outfile, cmpfile, "Assemble RectL.asm failed")
@@ -62,9 +62,9 @@ class AssemblerTestCase(unittest.TestCase):
         os.remove(outfile)
 
     def test_assemble_Pong_asm(self):
-        infile = os.path.join(self.current_dir, "..", "pong", "Pong.asm")
+        infile = os.path.join(self.current_dir, "test_asm", "pong", "Pong.asm")
         outfile = os.path.join(self.tmp_dir, "Pong.hack")
-        cmpfile = os.path.join(self.current_dir, "..", "pong", "Pong.hack")
+        cmpfile = os.path.join(self.current_dir, "test_asm", "pong", "Pong.hack")
         asmer = assembler.HackAssembler(infile, outfile)
         asmer.assemble()
         self.assertFileEqual(outfile, cmpfile, "Assemble Pong.asm failed")
@@ -72,9 +72,9 @@ class AssemblerTestCase(unittest.TestCase):
         os.remove(outfile)
 
     def test_assemble_PongL_asm(self):
-        infile = os.path.join(self.current_dir, "..", "pong", "PongL.asm")
+        infile = os.path.join(self.current_dir, "test_asm", "pong", "PongL.asm")
         outfile = os.path.join(self.tmp_dir, "PongL.hack")
-        cmpfile = os.path.join(self.current_dir, "..", "pong", "PongL.hack")
+        cmpfile = os.path.join(self.current_dir, "test_asm", "pong", "PongL.hack")
         asmer = assembler.HackAssembler(infile, outfile)
         asmer.assemble()
         self.assertFileEqual(outfile, cmpfile, "Assemble PongL.asm failed")
