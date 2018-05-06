@@ -60,7 +60,7 @@ class Parser:
         self.line = line
         l = self.trim(line)
 
-        if l == "":
+        if l == "" or l[0] == "(":
             self.type = INSTRUCTION_TYPE_EMPTY
         elif l[0] == "@":
             self.type = INSTRUCTION_TYPE_A
@@ -79,7 +79,7 @@ class Parser:
             pass
         elif l[0] == "(":
             s = re.search('\((.*?)\)', l).group(1)
-            self.symbol[s] = self.pc+1
+            self.symbol[s] = self.pc
         else:
             self.pc += 1
 

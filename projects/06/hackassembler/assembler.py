@@ -20,6 +20,7 @@ class HackAssembler:
     def assemble(self):
         """Parse and assemble the input asm file and write to output file
         """
+        self.first_pass()
         with open(self.infile, 'r') as infile:
             with open(self.outfile, 'w') as outfile:
                 line = infile.readline()
@@ -35,3 +36,12 @@ class HackAssembler:
                         print(line)
                         raise ValueError("Instruction type not recognized")
                     line = infile.readline()
+
+    def first_pass(self):
+        """First pass for parsing labels
+        """
+        with open(self.infile, 'r') as infile:
+            line = infile.readline()
+            while line != '':
+                self.parser.first_pass(line)
+                line = infile.readline()

@@ -93,7 +93,7 @@ class parserTestCase(unittest.TestCase):
     def test_first_pass_label_line(self):
         self.parser.pc = 10
         self.parser.first_pass("(LABEL)")
-        self.assertEqual(self.parser.symbol["LABEL"], 11,
+        self.assertEqual(self.parser.symbol["LABEL"], 10,
                          "Failed to parse label");
 
     def test_first_pass_comment_line(self):
