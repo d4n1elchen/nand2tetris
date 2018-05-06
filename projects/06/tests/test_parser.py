@@ -66,5 +66,29 @@ class parserTestCase(unittest.TestCase):
                          ("D", "M+1", "JLT"),
                          "Failed to parse fields in C type instruction");
 
+    def test_first_pass_label_line(self):
+        self.parser.pc = 10
+        self.parser.first_pass("(LABEL)")
+        self.assertEqual(self.parser.symbol["LABEL"], 11,
+                         "Failed to parse label");
+
+    def test_first_pass_comment_line(self):
+        self.parser.pc = 10
+        self.parser.first_pass("// comments bla bla")
+        self.assertEqual(self.parser.pc, 10,
+                         "Failed to parse comment line during first pass");
+
+    def test_first_pass_A_instruction_line(self):
+        self.parser.pc = 10
+        self.parser.first_pass("  @123  // comments bla bla")
+        self.assertEqual(self.parser.pc, 11,
+                         "Failed to parse A instruction during first pass");
+
+    def test_first_pass_C_instruction_line(self):
+        self.parser.pc = 10
+        self.parser.first_pass("  D=M+1;JLT  // comments bla bla")
+        self.assertEqual(self.parser.pc, 11,
+                         "Failed to parse C instruction during first pass");
+
 if __name__ == '__main__':
     unittest.main()

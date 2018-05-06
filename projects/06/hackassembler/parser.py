@@ -48,6 +48,12 @@ class Parser:
         # init symbol table
         self.symbol = DEFAULT_SYMBOLS
 
+        # init programe counter
+        self.pc = 0
+
+        # init variable allocator
+        self.n = 16
+
     def parse(self, line):
         """Parse a single line
         """
@@ -62,6 +68,20 @@ class Parser:
         else:
             self.type = INSTRUCTION_TYPE_C
             self.dest, self.comp, self.jump = self.parse_type_C(l)
+
+    def first_pass(self, line):
+        """Parse a single line for first pass
+        """
+        self.line = line
+        l = self.trim(line)
+
+        if l == "":
+            pass
+        elif l[0] == "(":
+            s = re.search('\((.*?)\)', l).group(1)
+            self.symbol[s] = self.pc+1
+        else:
+            self.pc += 1
 
     def trim(self, line):
         """Trim comments and leading and tailing spaces
