@@ -35,6 +35,15 @@ class parserTestCase(unittest.TestCase):
         self.assertEqual(self.parser.parse_type_A("@123"), ("@", 123),
                          "Failed to parse A instruction");
 
+    def test_parse_a_instruction_default_symbol(self):
+        self.assertEqual(self.parser.parse_type_A("@KBD"), ("@", 0x6000),
+                         "Failed to parse A instruction with default symbol");
+
+    def test_parse_a_instruction_symbol(self):
+        self.parser.parse_type_A("@somevar")
+        self.assertEqual(self.parser.parse_type_A("@sum"), ("@", 17),
+                         "Failed to parse A instruction with user symbol");
+
     def test_parse_c_instruction_without_jump(self):
         self.assertEqual(self.parser.parse_type_C("MD=M+1"), ("MD", "M+1", ""),
                          "Failed to C insturction w/o jump");
@@ -58,10 +67,25 @@ class parserTestCase(unittest.TestCase):
         self.assertEqual(self.parser.value, 123,
                          "Failed to parse value in A type instruction");
 
+    def test_parse_a_line_symbol(self):
+        self.parser.parse("  @R0  // commnets bla bla")
+        self.assertEqual(self.parser.type, parser.INSTRUCTION_TYPE_A, "Failed to recognize A type instruction");
+        self.assertEqual(self.parser.value, 0,
+                         "Failed to parse value in A type instruction with default symbol");
+
+        self.parser.parse("  @var1  // commnets bla bla")
+        self.assertEqual(self.parser.type, parser.INSTRUCTION_TYPE_A, "Failed to recognize A type instruction");
+        self.assertEqual(self.parser.value, 16,
+                         "Failed to parse value in A type instruction with user symbol creation");
+
+        self.parser.parse("  @var1  // commnets bla bla")
+        self.assertEqual(self.parser.type, parser.INSTRUCTION_TYPE_A, "Failed to recognize A type instruction");
+        self.assertEqual(self.parser.value, 16,
+                         "Failed to parse value in A type instruction with user symbol reference");
+
     def test_parse_c_line(self):
         self.parser.parse("  D=M+1;JLT  // commnets bla bla")
-        self.assertEqual(self.parser.type, parser.INSTRUCTION_TYPE_C,
-                         "Failed to recognize C type instruction");
+        self.assertEqual(self.parser.type, parser.INSTRUCTION_TYPE_C, "Failed to recognize C type instruction");
         self.assertEqual((self.parser.dest, self.parser.comp, self.parser.jump),
                          ("D", "M+1", "JLT"),
                          "Failed to parse fields in C type instruction");

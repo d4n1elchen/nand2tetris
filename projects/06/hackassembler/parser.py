@@ -91,7 +91,15 @@ class Parser:
     def parse_type_A(self, line):
         """Parse type A instruction
         """
-        return line[0], int(line[1:])
+        val = line[1:]
+        if val.isdigit():
+            return line[0], int(val)
+        elif val in self.symbol:
+            return line[0], self.symbol[val]
+        else:
+            self.symbol[val] = self.n
+            self.n += 1
+            return line[0], self.symbol[val]
 
     def parse_type_C(self, line):
         """Parse type C instruction
