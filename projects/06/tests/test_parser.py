@@ -1,10 +1,10 @@
 import unittest
 
-import HackAssembler.parser as parser
+import hackassembler.parser as parser
 
 class parserTestCase(unittest.TestCase):
     def setUp(self):
-        self.parser = parser.parser()
+        self.parser = parser.Parser()
 
     def test_trim_commnet_line(self):
         self.assertEqual(self.parser.trim("// commnets bla bla"),

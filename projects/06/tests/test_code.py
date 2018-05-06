@@ -1,8 +1,8 @@
 import unittest
 
-import HackAssembler.code as code
+import hackassembler.code as code
 
-class ParserTestCase(unittest.TestCase):
+class CodeTestCase(unittest.TestCase):
     def test_A_code_construct(self):
         self.assertEqual(code.get_A_instruction(123),
                          "0000000001111011", "Failed to construct A code");
