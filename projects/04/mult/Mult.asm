@@ -13,6 +13,10 @@
 // if R0 or R1 is 0:
 //   goto END
 //
+// if R0 or R1 < 0:
+//   R0/R1 = -R0/R1
+//   sign = 1
+//
 // if R0 > R1:
 //   a = R0
 //   n = R1
@@ -27,29 +31,59 @@
 // (END)
 // R2 = sum
 
-// Compare two number
+// Initialize variables
     @sum
     M=0   // sum = 0
     @i
     M=0   // i = 0
+    @sign
+    M=0   // sign = 0
 
+// Check if R0 or R1 is negative or zero
+(CHECK_R0)
     @R0
     D=M
     @LOOP_END
     D;JEQ // if R0 == 0, goto END
 
+    @R0
+    D=M
+    @CHECK_R1
+    D;JGT // if R0 > 0, goto CHECK_R1
+
+// R0 is negative
+    @R0
+    M=-M // R0 = -R0
+    @sign
+    M=!M // sing = !sign
+
+(CHECK_R1)
     @R1
     D=M
     @LOOP_END
     D;JEQ // if R1 == 0, goto END
 
+    @R1
+    D=M
+    @COMP_NUM
+    D;JGT // if R1 > 0, goto COMP_NUM
+
+// R1 is negative
+    @R1
+    M=-M // R1 = -R1
+    @sign
+    M=!M // sign = !sign
+
+// Compare two number
+(COMP_NUM)
     @R0
     D=M
     @R1
     D=D-M
     @R1_BIGGER
-    D;JLT // if R0 - R1 < 0, goto R1_BIGGER
+    D;JLT // if R0 - R1 < 0, goto R1_BIGGER else R0_BIGGER
 
+(R0_BIGGER)
     @R0
     D=M
     @a
@@ -93,6 +127,15 @@
     D=M
     @R2
     M=D   // R2 = sum
+
+    @sign
+    D=M
+    @END
+    D;JEQ // if sign == 0, goto END
+
+// flip sign
+    @R2
+    M=-M
 
 (END)
     @END

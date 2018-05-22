@@ -48,7 +48,7 @@
     D=M
     @KBD
     D=D-A
-    @UPDATE_END
+    @MAIN_LOOP
     D;JEQ
 
     @fill
@@ -59,8 +59,4 @@
     @addr
     M=M+1
     @UPDATE_LOOP
-    0;JMP
-
-(UPDATE_END)
-    @MAIN_LOOP
     0;JMP
