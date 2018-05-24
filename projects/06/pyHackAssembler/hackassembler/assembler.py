@@ -4,28 +4,25 @@ from . import parser
 from . import code
 
 class HackAssembler:
-    def __init__(self, infile, outfile=''):
-        self.parser = parser.Parser()
+    def __init__(self, infile_name, outfile_name=''):
+        self.infile_name = infile_name
 
-        self.infile = infile
+        if outfile_name == '':
+            outfile_name = splitext(infile)[0] + '.hack'
 
-        if outfile == '':
-            outfile = splitext(infile)[0] + ".hack"
-
-        if outfile.lower().endswith(".hack"):
-            self.outfile = outfile
+        if outfile_name.lower().endswith('.hack'):
+            self.outfile_name = outfile_name
         else:
-            self.outfile = outfile + ".hack"
+            self.outfile_name = outfile_name + '.hack'
 
     def assemble(self):
         """Parse and assemble the input asm file and write to output file
         """
-        self.first_pass()
-        with open(self.infile, 'r') as infile:
-            with open(self.outfile, 'w') as outfile:
-                line = infile.readline()
-                while line != '':
-                    self.parser.parse(line)
+        with open(self.infile_name, 'r') as infile:
+            self.parser = parser.Parser(infile)
+            with open(self.outfile_name, 'w') as outfile:
+                self.parser.first_pass()
+                while self.parser.parse_next():
                     if self.parser.type == parser.INSTRUCTION_TYPE_A:
                         print(code.get_A_instruction(self.parser.value), file=outfile)
                     elif self.parser.type == parser.INSTRUCTION_TYPE_C:
@@ -34,14 +31,4 @@ class HackAssembler:
                         pass
                     else:
                         print(line)
-                        raise ValueError("Instruction type not recognized")
-                    line = infile.readline()
-
-    def first_pass(self):
-        """First pass for parsing labels
-        """
-        with open(self.infile, 'r') as infile:
-            line = infile.readline()
-            while line != '':
-                self.parser.first_pass(line)
-                line = infile.readline()
+                        raise ValueError('Instruction type not recognized')

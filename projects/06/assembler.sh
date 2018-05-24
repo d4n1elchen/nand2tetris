@@ -9,7 +9,7 @@ do
     do
         name=$(basename -- "$infile")
         name=${name%.*}
-        outfile="my_hack_file/$name.hack"
+        outfile="my_hack_files/$name.hack"
         echo "Process $infile and output to $outfile ..."
         pyHAsm -o $outfile $infile
     done

@@ -1,10 +1,17 @@
 import unittest
+import os
 
 import hackassembler.parser as parser
 
 class parserTestCase(unittest.TestCase):
     def setUp(self):
-        self.parser = parser.Parser()
+        self.current_dir = os.path.dirname(__file__)
+        self.infile_str = os.path.join(self.current_dir, "test_asm", "add", "Add.asm")
+        self.infile = open(self.infile_str, 'r')
+        self.parser = parser.Parser(self.infile)
+
+    def tearDown(self):
+        self.infile.close()
 
     def test_trim_commnet_line(self):
         self.assertEqual(self.parser.trim("// commnets bla bla"),
@@ -92,25 +99,25 @@ class parserTestCase(unittest.TestCase):
 
     def test_first_pass_label_line(self):
         self.parser.pc = 10
-        self.parser.first_pass("(LABEL)")
+        self.parser.first_pass_line("(LABEL)")
         self.assertEqual(self.parser.symbol["LABEL"], 10,
                          "Failed to parse label");
 
     def test_first_pass_comment_line(self):
         self.parser.pc = 10
-        self.parser.first_pass("// comments bla bla")
+        self.parser.first_pass_line("// comments bla bla")
         self.assertEqual(self.parser.pc, 10,
                          "Failed to parse comment line during first pass");
 
     def test_first_pass_A_instruction_line(self):
         self.parser.pc = 10
-        self.parser.first_pass("  @123  // comments bla bla")
+        self.parser.first_pass_line("  @123  // comments bla bla")
         self.assertEqual(self.parser.pc, 11,
                          "Failed to parse A instruction during first pass");
 
     def test_first_pass_C_instruction_line(self):
         self.parser.pc = 10
-        self.parser.first_pass("  D=M+1;JLT  // comments bla bla")
+        self.parser.first_pass_line("  D=M+1;JLT  // comments bla bla")
         self.assertEqual(self.parser.pc, 11,
                          "Failed to parse C instruction during first pass");
 
