@@ -53,9 +53,9 @@ class CodeTestCase(unittest.TestCase):
         self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
         os.remove(outfile)
 
-    def test_write_pushpop_push_const(self):
+    def test_write_pushpop_push_constant(self):
         cmd = 'push'
-        seg = 'const'
+        seg = 'constant'
         idx = 66
         outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
         cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))

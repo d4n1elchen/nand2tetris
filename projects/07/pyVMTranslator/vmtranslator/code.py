@@ -24,7 +24,7 @@ class CodeWriter():
         asm = self.get_memory_access_snippet(cmd, segment, index)
 
         if self.comment:
-            print('// {}'.format(cmd), file=self.outfile)
+            print('// {} {} {}'.format(cmd, segment, index), file=self.outfile)
 
         self.outfile.write(asm)
 
@@ -47,7 +47,7 @@ class CodeWriter():
 
     def get_memory_access_snippet(self, cmd, segment, index):
 
-        if segment in ['local', 'argument', 'this', 'that', 'temp']:
+        if segment in ['local', 'argument', 'this', 'that']:
             key = cmd + '_relative'
         else:
             key = cmd + '_' + segment
@@ -61,13 +61,12 @@ class CodeWriter():
 
             memory_access_snippets[key] = snippet
 
-        if segment in ['local', 'argument', 'this', 'that', 'temp']:
+        if segment in ['local', 'argument', 'this', 'that']:
             snippet = snippet.replace('SEGMENT', {
                 'local': 'LCL',
                 'argument': 'ARG',
                 'this': 'THIS',
-                'that': 'THAT',
-                'temp': '5'
+                'that': 'THAT'
             }[segment])
 
         snippet = snippet.replace('IDX', str(index))

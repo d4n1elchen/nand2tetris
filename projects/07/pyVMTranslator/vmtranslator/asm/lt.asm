@@ -14,5 +14,5 @@
 (JMPNUM)
     @SP
     A=M-1
-    M=1
+    M=-1
 (JMPNUM_END)

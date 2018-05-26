@@ -1,6 +1,6 @@
     @5
     D=A
-    @2
+    @IDX
     A=D+A
     D=M
     @SP
