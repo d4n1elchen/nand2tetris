@@ -1,0 +1,9 @@
+    @LCL
+    D=M
+    @10
+    A=D+A
+    D=M
+    @SP
+    AM=M+1
+    A=A-1
+    M=D

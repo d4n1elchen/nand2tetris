@@ -26,7 +26,6 @@ class CodeTestCase(unittest.TestCase):
                 codewriter = code.CodeWriter(file)
                 codewriter.write_arithmetic(cmd)
             self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
-
             os.remove(outfile)
 
     def test_write_arithmetic_jmp(self):
@@ -39,7 +38,6 @@ class CodeTestCase(unittest.TestCase):
                 codewriter = code.CodeWriter(file)
                 codewriter.write_arithmetic(cmd)
             self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
-
             os.remove(outfile)
 
     def test_write_arithmetic_jmp(self):
@@ -52,6 +50,207 @@ class CodeTestCase(unittest.TestCase):
             for cmd in arithm_jmp_cmds:
                 codewriter.write_arithmetic(cmd)
 
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+        os.remove(outfile)
+
+    def test_write_pushpop_push_const(self):
+        cmd = 'push'
+        seg = 'const'
+        idx = 66
+        outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+        os.remove(outfile)
+
+    def test_write_pushpop_push_local(self):
+        cmd = 'push'
+        seg = 'local'
+        idx = 10
+        outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+        os.remove(outfile)
+
+    def test_write_pushpop_push_argument(self):
+        cmd = 'push'
+        seg = 'argument'
+        idx = 7
+        outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+        os.remove(outfile)
+
+    def test_write_pushpop_push_this(self):
+        cmd = 'push'
+        seg = 'this'
+        idx = 13
+        outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+        os.remove(outfile)
+
+    def test_write_pushpop_push_that(self):
+        cmd = 'push'
+        seg = 'that'
+        idx = 0
+        outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+        os.remove(outfile)
+
+    def test_write_pushpop_push_temp(self):
+        cmd = 'push'
+        seg = 'temp'
+        idx = 2
+        outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+        os.remove(outfile)
+
+    def test_write_pushpop_push_static(self):
+        cmd = 'push'
+        seg = 'static'
+        idx = 4
+        outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+        os.remove(outfile)
+
+    def test_write_pushpop_push_pointer(self):
+        outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
+        cmd = 'push'
+        seg = 'pointer'
+
+        # THIS
+        idx = 0
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+
+        # THAT
+        idx = 1
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+
+        os.remove(outfile)
+
+    def test_write_pushpop_pop_local(self):
+        cmd = 'pop'
+        seg = 'local'
+        idx = 8
+        outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+        os.remove(outfile)
+
+    def test_write_pushpop_pop_argument(self):
+        cmd = 'pop'
+        seg = 'argument'
+        idx = 0
+        outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+        os.remove(outfile)
+
+    def test_write_pushpop_pop_this(self):
+        cmd = 'pop'
+        seg = 'this'
+        idx = 3
+        outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+        os.remove(outfile)
+
+    def test_write_pushpop_pop_that(self):
+        cmd = 'pop'
+        seg = 'that'
+        idx = 22
+        outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+        os.remove(outfile)
+
+    def test_write_pushpop_pop_temp(self):
+        cmd = 'pop'
+        seg = 'temp'
+        idx = 1
+        outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+        os.remove(outfile)
+
+    def test_write_pushpop_pop_static(self):
+        cmd = 'pop'
+        seg = 'static'
+        idx = 5
+        outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+        os.remove(outfile)
+
+    def test_write_pushpop_pop_pointer(self):
+        outfile = os.path.join(self.tmp_dir, 'arithm_jmp_test.asm')
+        cmd = 'pop'
+        seg = 'pointer'
+
+        # THIS
+        idx = 0
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
+        self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
+
+        # THAT
+        idx = 1
+        cmpfile = os.path.join(curr_dir, 'pushpop_cmp', '{}_{}_{}.asm'.format(cmd, seg, idx))
+        with open(outfile, 'w') as file:
+            codewriter = code.CodeWriter(file)
+            codewriter.write_pushpop(cmd, seg, idx)
         self.assertFileEqual(outfile, cmpfile, 'Write {} command failed'.format(cmd))
 
         os.remove(outfile)

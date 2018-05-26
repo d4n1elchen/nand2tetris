@@ -2,8 +2,7 @@ import os
 
 curr_dir = os.path.dirname(os.path.realpath(__file__))
 arithmetic_snippets = {}
-
-jmp_cmds = ['eq', 'gt', 'lt']
+memory_access_snippets = {}
 
 class CodeWriter():
 
@@ -19,19 +18,61 @@ class CodeWriter():
         if self.comment:
             print('// {}'.format(cmd), file=self.outfile)
 
-        if cmd in jmp_cmds:
-            asm = asm.replace('JMPNUM', 'ARITHM_JMP_{}'.format(self.jmpcnt))
-            self.jmpcnt += 1
+        self.outfile.write(asm)
+
+    def write_pushpop(self, cmd, segment, index):
+        asm = self.get_memory_access_snippet(cmd, segment, index)
+
+        if self.comment:
+            print('// {}'.format(cmd), file=self.outfile)
 
         self.outfile.write(asm)
 
     def get_arithmetic_snippet(self, cmd):
         if cmd in arithmetic_snippets.keys():
-            return arithmetic_snippets[cmd]
+            snippet = arithmetic_snippets[cmd]
         else:
             filename = os.path.join(curr_dir, 'asm', '{}.asm'.format(cmd))
             with open(filename, 'r') as file:
                 snippet = file.read()
 
             arithmetic_snippets[cmd] = snippet
-            return snippet
+
+        if cmd in ['eq', 'gt', 'lt']:
+            snippet = snippet.replace('JMPNUM', 'ARITHM_JMP_{}'.format(self.jmpcnt))
+            self.jmpcnt += 1
+
+        return snippet
+
+
+    def get_memory_access_snippet(self, cmd, segment, index):
+
+        if segment in ['local', 'argument', 'this', 'that', 'temp']:
+            key = cmd + '_relative'
+        else:
+            key = cmd + '_' + segment
+
+        if key in memory_access_snippets.keys():
+            snippet = memory_access_snippets[key]
+        else:
+            filename = os.path.join(curr_dir, 'asm', '{}.asm'.format(key))
+            with open(filename, 'r') as file:
+                snippet = file.read()
+
+            memory_access_snippets[key] = snippet
+
+        if segment in ['local', 'argument', 'this', 'that', 'temp']:
+            snippet = snippet.replace('SEGMENT', {
+                'local': 'LCL',
+                'argument': 'ARG',
+                'this': 'THIS',
+                'that': 'THAT',
+                'temp': '5'
+            }[segment])
+
+        snippet = snippet.replace('IDX', str(index))
+
+        if segment == 'pointer':
+            snippet = snippet.replace('THISTHAT', ['THIS', 'THAT'][index])
+
+        return snippet
