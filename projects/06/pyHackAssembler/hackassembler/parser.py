@@ -33,7 +33,7 @@ DEFAULT_SYMBOLS = {
 }
 
 class Parser:
-    def __init__(self, in_stream):
+    def __init__(self, infile):
         self.type = INSTRUCTION_TYPE_UNKNOWN
 
         # instruction parts
@@ -55,12 +55,12 @@ class Parser:
         self.n = 16
 
         # file in stream
-        self.in_stream = in_stream
+        self.infile = infile
 
     def next(self):
         """Read next line
         """
-        self.line = self.in_stream.readline()
+        self.line = self.infile.readline()
         return self.line
 
     def parse_next(self):
@@ -93,7 +93,7 @@ class Parser:
             self.first_pass_line(self.line)
 
         # Go back to begining
-        self.in_stream.seek(0)
+        self.infile.seek(0)
 
     def first_pass_line(self, line):
         l = self.trim(line)

@@ -2,8 +2,6 @@
 
 import argparse
 
-from hackassembler import assembler
-
 parser = argparse.ArgumentParser(description='Translate Hack assemble language into Hack machine code.')
 
 parser.add_argument('infile', type=str,
@@ -13,6 +11,4 @@ parser.add_argument('-o', '--outfile', default='out.hack', type=str,
 
 args = parser.parse_args()
 
-asmer = assembler.HackAssembler(args.infile, args.outfile)
-asmer.assemble()
-asmer.close()
+print(args.infile)

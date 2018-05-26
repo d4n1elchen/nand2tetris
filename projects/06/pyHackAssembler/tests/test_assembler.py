@@ -1,6 +1,5 @@
 import unittest
 import os
-import filecmp
 
 import hackassembler.assembler as assembler
 
@@ -18,6 +17,7 @@ class AssemblerTestCase(unittest.TestCase):
         cmpfile = os.path.join(self.current_dir, "test_asm", "add", "Add.hack")
         asmer = assembler.HackAssembler(infile, outfile)
         asmer.assemble()
+        asmer.close()
         self.assertFileEqual(outfile, cmpfile, "Assemble Add.asm failed")
 
         os.remove(outfile)
@@ -28,6 +28,7 @@ class AssemblerTestCase(unittest.TestCase):
         cmpfile = os.path.join(self.current_dir, "test_asm", "max", "Max.hack")
         asmer = assembler.HackAssembler(infile, outfile)
         asmer.assemble()
+        asmer.close()
         self.assertFileEqual(outfile, cmpfile, "Assemble Max.asm failed")
 
         os.remove(outfile)
@@ -38,6 +39,7 @@ class AssemblerTestCase(unittest.TestCase):
         cmpfile = os.path.join(self.current_dir, "test_asm", "max", "MaxL.hack")
         asmer = assembler.HackAssembler(infile, outfile)
         asmer.assemble()
+        asmer.close()
         self.assertFileEqual(outfile, cmpfile, "Assemble MaxL.asm failed")
 
         os.remove(outfile)
@@ -48,6 +50,7 @@ class AssemblerTestCase(unittest.TestCase):
         cmpfile = os.path.join(self.current_dir, "test_asm", "rect", "Rect.hack")
         asmer = assembler.HackAssembler(infile, outfile)
         asmer.assemble()
+        asmer.close()
         self.assertFileEqual(outfile, cmpfile, "Assemble Rect.asm failed")
 
         os.remove(outfile)
@@ -57,6 +60,7 @@ class AssemblerTestCase(unittest.TestCase):
         cmpfile = os.path.join(self.current_dir, "test_asm", "rect", "RectL.hack")
         asmer = assembler.HackAssembler(infile, outfile)
         asmer.assemble()
+        asmer.close()
         self.assertFileEqual(outfile, cmpfile, "Assemble RectL.asm failed")
 
         os.remove(outfile)
@@ -67,6 +71,7 @@ class AssemblerTestCase(unittest.TestCase):
         cmpfile = os.path.join(self.current_dir, "test_asm", "pong", "Pong.hack")
         asmer = assembler.HackAssembler(infile, outfile)
         asmer.assemble()
+        asmer.close()
         self.assertFileEqual(outfile, cmpfile, "Assemble Pong.asm failed")
 
         os.remove(outfile)
@@ -77,6 +82,7 @@ class AssemblerTestCase(unittest.TestCase):
         cmpfile = os.path.join(self.current_dir, "test_asm", "pong", "PongL.hack")
         asmer = assembler.HackAssembler(infile, outfile)
         asmer.assemble()
+        asmer.close()
         self.assertFileEqual(outfile, cmpfile, "Assemble PongL.asm failed")
 
         os.remove(outfile)

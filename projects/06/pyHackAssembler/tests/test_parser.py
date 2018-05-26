@@ -5,13 +5,10 @@ import hackassembler.parser as parser
 
 class parserTestCase(unittest.TestCase):
     def setUp(self):
-        self.current_dir = os.path.dirname(__file__)
-        self.infile_str = os.path.join(self.current_dir, "test_asm", "add", "Add.asm")
-        self.infile = open(self.infile_str, 'r')
-        self.parser = parser.Parser(self.infile)
+        self.parser = parser.Parser(None)
 
     def tearDown(self):
-        self.infile.close()
+        pass
 
     def test_trim_commnet_line(self):
         self.assertEqual(self.parser.trim("// commnets bla bla"),

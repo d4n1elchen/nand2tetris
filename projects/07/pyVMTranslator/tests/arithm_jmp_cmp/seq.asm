@@ -1,0 +1,54 @@
+    @SP
+    D=M-1
+    AM=D
+    D=M
+    A=A-1
+    D=M-D
+    @ARITHM_JMP_0
+    D;JEQ
+    @SP
+    A=M-1
+    M=0
+    @ARITHM_JMP_0_END
+    0;JMP
+(ARITHM_JMP_0)
+    @SP
+    A=M-1
+    M=1
+(ARITHM_JMP_0_END)
+    @SP
+    D=M-1
+    AM=D
+    D=M
+    A=A-1
+    D=M-D
+    @ARITHM_JMP_1
+    D;JGT
+    @SP
+    A=M-1
+    M=0
+    @ARITHM_JMP_1_END
+    0;JMP
+(ARITHM_JMP_1)
+    @SP
+    A=M-1
+    M=1
+(ARITHM_JMP_1_END)
+    @SP
+    D=M-1
+    AM=D
+    D=M
+    A=A-1
+    D=M-D
+    @ARITHM_JMP_2
+    D;JLT
+    @SP
+    A=M-1
+    M=0
+    @ARITHM_JMP_2_END
+    0;JMP
+(ARITHM_JMP_2)
+    @SP
+    A=M-1
+    M=1
+(ARITHM_JMP_2_END)
